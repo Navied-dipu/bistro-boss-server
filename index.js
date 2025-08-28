@@ -26,9 +26,19 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
+    const userCollection = client.db("bistroDb").collection("users");
     const menuCollection = client.db("bistroDb").collection("menu");
     const reviewsCollection = client.db("bistroDb").collection("reviews");
     const cartsCollection = client.db("bistroDb").collection("carts");
+
+    // user related api
+    app.post('/users', async(req,res)=>{
+      const user=req.body
+      const result= await userCollection.insertOne(user)
+      res.send(result)
+    })
+
+
 
 // menu
     app.get('/menu', async(req, res)=>{
